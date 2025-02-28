@@ -35,6 +35,8 @@ RUN curl -LO https://github.com/cargo-bins/cargo-binstall/releases/latest/downlo
     && tar -xvf cargo-binstall-x86_64-unknown-linux-gnu.tgz \
     && cp cargo-binstall /usr/local/cargo/bin
 
+RUN cargo binstall -y cargo-leptos
+
 # Build the binary.
 RUN cargo leptos build --release
 
