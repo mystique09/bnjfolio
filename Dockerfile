@@ -35,8 +35,10 @@ RUN curl -LO https://github.com/cargo-bins/cargo-binstall/releases/latest/downlo
     && tar -xvf cargo-binstall-x86_64-unknown-linux-gnu.tgz \
     && cp cargo-binstall /usr/local/.cargo/bin
 
-# Build the binary.
 RUN cargo binstall -y cargo-leptos
+
+# Build the binary.
+RUN cargo leptos build --release
 
 # Second stage building, to avoid bloated binary.
 FROM alpine:latest
