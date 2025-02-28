@@ -1,6 +1,7 @@
 FROM rust:1.81.0-alpine AS builder
 
 WORKDIR /usr/src/bnjfolio-dev
+COPY . .
 
 # Update system packages and install necessary dependencies.
 RUN apk add --no-cache \
