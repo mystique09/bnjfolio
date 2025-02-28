@@ -1,28 +1,15 @@
-FROM node:22-bullseye-slim AS tailwind
+FROM rust:1.81.0-alpine AS builder
 
-WORKDIR /tailwind
+WORKDIR /usr/src/web
 
-# Copy the package.json and package-lock.json files
-COPY . .
-
-RUN npm install
-
-RUN npm run build
-
-FROM rust:1.79.0-slim-bullseye AS builder
-
-WORKDIR /usr/src/bnj
-COPY --from=tailwind /tailwind .
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Update system packages and install necessary dependencies.
+RUN apk add --no-cache \
     musl-dev \
-    nodejs \
-    libssl-dev \
-    pkg-config \
+    openssl-dev \
+    openssl-libs-static \
+    pkgconfig \
     gcc \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+    curl
 
 ARG LEPTOS_OUTPUT_NAME
 ARG LEPTOS_SITE_ROOT
@@ -35,7 +22,7 @@ ENV LEPTOS_OUTPUT_NAME=$LEPTOS_OUTPUT_NAME \
     LEPTOS_SITE_PKG_DIR=$LEPTOS_SITE_PKG_DIR \
     LEPTOS_SITE_ADDR=$LEPTOS_SITE_ADDR \
     LEPTOS_RELOAD_PORT=$LEPTOS_RELOAD_PORT
-    
+
 RUN cp ./.env.example ./.env
 
 RUN rustup target add wasm32-unknown-unknown
@@ -54,19 +41,17 @@ RUN cargo binstall -y cargo-leptos
 RUN cargo leptos build --release
 
 # Second stage building, to avoid bloated binary.
-FROM debian:bullseye-slim
+FROM alpine:latest
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libssl-dev
+RUN apk add --no-cache libssl3 \
+    ca-certificates \
+    curl
 
 WORKDIR /app
 
 # Copy the binary from the builder stage.
-COPY --from=builder /usr/src/bnj/target/release/bnj .
-COPY --from=builder /usr/src/bnj/site/ ./site
-COPY --from=builder /usr/src/bnj/startup.sh .
-COPY --from=builder /usr/src/bnj/.env .
+COPY --from=builder /usr/src/web/target/release/bnjfolio .
+COPY --from=builder /usr/src/web/site/ ./site
+COPY --from=builder /usr/src/web/.env .
 
-RUN chmod +x ./startup.sh
-
-CMD ["./startup.sh"]
+CMD ["./bnjfolio"]
