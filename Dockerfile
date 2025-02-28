@@ -1,6 +1,6 @@
 FROM rust:1.81.0-alpine AS builder
 
-WORKDIR /usr/src/web
+WORKDIR /usr/src/bnjfolio-dev
 
 # Update system packages and install necessary dependencies.
 RUN apk add --no-cache \
@@ -50,8 +50,8 @@ RUN apk add --no-cache libssl3 \
 WORKDIR /app
 
 # Copy the binary from the builder stage.
-COPY --from=builder /usr/src/web/target/release/bnjfolio .
-COPY --from=builder /usr/src/web/site/ ./site
-COPY --from=builder /usr/src/web/.env .
+COPY --from=builder /usr/src/bnjfolio-dev/target/release/bnjfolio .
+COPY --from=builder /usr/src/bnjfolio-dev/site/ ./site
+COPY --from=builder /usr/src/bnjfolio-dev/.env .
 
 CMD ["./bnjfolio"]
