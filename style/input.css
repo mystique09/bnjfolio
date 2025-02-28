@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: oklch(15.43% 0 0);
+    --color-secondary: oklch(29.4% 0.0671 34.63);
+    --color-warm-red: oklch(47.94% 0.1361 34.54);
+    --color-accent: oklch(67.3% 0.1856 34.55);
+
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+}
