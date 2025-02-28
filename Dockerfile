@@ -31,10 +31,10 @@ RUN rustup target add wasm32-unknown-unknown
 # Install cargo-binstall
 RUN curl -LO https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tgz \
     && tar -xvf cargo-binstall-x86_64-unknown-linux-gnu.tgz \
-    && cp cargo-binstall /usr/local/cargo/bin
+    && cp cargo-binstall /usr/local/.cargo/bin
 
 # Install necessary dependencies.
-RUN cargo binstall -y --git https://github.com/leptos-rs/cargo-leptos cargo-leptos
+RUN cargo binstall -y cargo-leptos
 
 # Install rust nightly and wasm
 
