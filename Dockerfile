@@ -8,6 +8,7 @@ RUN apk add --no-cache \
     musl-dev \
     openssl-dev \
     openssl-libs-static \
+    g++ \
     pkgconfig \
     gcc \
     curl
