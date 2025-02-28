@@ -50,8 +50,8 @@ RUN apk add --no-cache libssl3 \
 WORKDIR /app
 
 # Copy the binary from the builder stage.
-COPY --from=builder /usr/src/bnjfolio-dev/target/release/bnjfolio .
-COPY --from=builder /usr/src/bnjfolio-dev/site/ ./site
+COPY --from=builder /usr/src/bnjfolio-dev/target/server/release/bnjfolio .
+COPY --from=builder /usr/src/bnjfolio-dev/target/site/ ./site
 COPY --from=builder /usr/src/bnjfolio-dev/.env .
 
 CMD ["./bnjfolio"]
