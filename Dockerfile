@@ -31,8 +31,8 @@ RUN cp ./.env.example ./.env
 RUN rustup target add wasm32-unknown-unknown
 
 # Install cargo-leptos
-RUN curl -LO https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tgz \
-    && tar -xvf cargo-binstall-x86_64-unknown-linux-gnu.tgz \
+RUN curl -LO https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz \
+    && tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz \
     && cp cargo-binstall /usr/local/cargo/bin
 
 RUN cargo binstall -y cargo-leptos
