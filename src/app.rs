@@ -14,7 +14,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
             <head>
                 <meta charset="utf-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+                <link rel="icon" href="/favicon.png" />
                 <AutoReload options=options.clone() />
                 <HydrationScripts options/>
                 <MetaTags/>
